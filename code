@@ -1,0 +1,111 @@
+module second_project (sw,led,key1,key2,key3,key4);
+	input  [3:0] sw;							//开关输入信号，利用了其中4个开关作为3-8译码器的输入
+	input  key1;
+	input  key2;
+	input  key3;
+	input  key4;
+	output [4:0] led;						//输出信号控制特定LED
+ 
+        reg [4:0] led;                                                  //定义led为reg型变量，在always过程块中只能对reg型变量赋值
+		  reg [3:0] rec1;
+		  reg [3:0] rec2;
+		  reg [4:0] result;
+		  
+		  initial
+		  begin
+		  led =5'b00000;
+		  end
+        //always过程块，括号中sw为敏感变量，当sw变化一次执行一次always中所有语句，否则保持不变
+	always @ ( negedge key1 or negedge key2 or negedge key3 or negedge key4 )
+	begin
+		if(!key1)
+			begin
+				case(sw)                                            
+					4'b0000:	led=5'b1111_1;                      
+					4'b0001:	led=5'b0111_1;                      
+					4'b0010:	led=5'b1011_1;      
+					4'b0011:	led=5'b0011_1;		  
+					4'b0100:	led=5'b1101_1;		 
+					4'b0101:	led=5'b0101_1;		 
+					4'b0110: led=5'b1001_1;		 
+					4'b0111:	led=5'b0001_1;		 
+					4'b1000: led=5'b1110_1;
+					4'b1001: led=5'b0110_1;
+					4'b1010: led=5'b1010_1;
+					4'b1011: led=5'b0010_1;
+					4'b1100: led=5'b1100_1;
+					4'b1101: led=5'b0100_1;
+					4'b1110: led=5'b1000_1;
+					4'b1111: led=5'b0000_1; 
+					default: ;
+				endcase
+				rec1 <= sw;
+			end
+		else if(!key2)
+			begin
+				case(sw)                                            
+					4'b0000:	led=5'b1111_1;                      
+					4'b0001:	led=5'b0111_1;                      
+					4'b0010:	led=5'b1011_1;      
+					4'b0011:	led=5'b0011_1;		  
+					4'b0100:	led=5'b1101_1;		 
+					4'b0101:	led=5'b0101_1;		 
+					4'b0110: led=5'b1001_1;		 
+					4'b0111:	led=5'b0001_1;		 
+					4'b1000: led=5'b1110_1;
+					4'b1001: led=5'b0110_1;
+					4'b1010: led=5'b1010_1;
+					4'b1011: led=5'b0010_1;
+					4'b1100: led=5'b1100_1;
+					4'b1101: led=5'b0100_1;
+					4'b1110: led=5'b1000_1;
+					4'b1111: led=5'b0000_1; 
+					default: ;
+
+				endcase
+				rec2 <= sw;
+			end
+		else if(!key3)
+			begin
+				result = rec1+rec2;
+				case(result)                                            
+					5'b00000: led=5'b1111_1;                   
+					5'b00001: led=5'b0111_1;                     
+					5'b00010: led=5'b1011_1;      
+					5'b00011: led=5'b0011_1;		  
+					5'b00100: led=5'b1101_1;		 
+					5'b00101: led=5'b0101_1;		 
+					5'b00110: led=5'b1001_1;		 
+					5'b00111: led=5'b0001_1;		 
+					5'b01000: led=5'b1110_1;
+					5'b01001: led=5'b0110_1;
+					5'b01010: led=5'b1010_1;
+					5'b01011: led=5'b0010_1;
+					5'b01100: led=5'b1100_1;
+					5'b01101: led=5'b0100_1;
+					5'b01110: led=5'b1000_1;
+					5'b01111: led=5'b0000_1;
+					5'b10000: led=5'b1111_0;
+					5'b10001: led=5'b0111_0;
+					5'b10010: led=5'b1011_0;      
+					5'b10011: led=5'b0011_0;		  
+					5'b10100: led=5'b1101_0;		 
+					5'b10101: led=5'b0101_0;		 
+					5'b10110: led=5'b1001_0;		 
+					5'b10111: led=5'b0001_0;		 
+					5'b11000: led=5'b1110_0;
+					5'b11001: led=5'b0110_0;
+					5'b11010: led=5'b1010_0;
+					5'b11011: led=5'b0010_0;
+					5'b11100: led=5'b1100_0;
+					5'b11101: led=5'b0100_0;
+					5'b11110: led=5'b1000_0;
+					5'b11111: led=5'b0000_0;	
+				default: ;
+			 endcase
+			 end
+		 else
+		 led =5'b11111;
+		
+	end
+endmodule
